@@ -14,29 +14,7 @@ class HeaderComponent < ApplicationComponent
       style: "var(--header-height); var(--header-mb)",
     ) do
       home_page_header if @is_home_page
-      div(
-        class: "top-0 z-10 h-16 pt-6",
-        style: "position:var(--header-position)",
-      ) do
-        render ContainerComponent.new(
-                 class: "top-[var(--header-top,theme(spacing.6))] w-full",
-                 style: "position:var(--header-inner-position)",
-               ) do
-          div(class: "relative flex gap-4") do
-            div(class: "flex flex-1") do
-              # placeholder for not homepage
-            end
-            div(class: "flex flex-1 justify-end md:justify-center") do
-              desktop_navigation class: "pointer-events-auto hidden md:block"
-            end
-            div(class: "flex justify-end md:flex-1") do
-              div(class: "pointer-events-auto") do
-                render ModeToggle::Component.new
-              end
-            end
-          end
-        end
-      end
+      navbar
     end
   end
 
@@ -61,6 +39,32 @@ class HeaderComponent < ApplicationComponent
             class: "block h-16 w-16 origin-left",
             style: "transform:var(--avatar-image-transform)",
           )
+        end
+      end
+    end
+  end
+
+  def navbar
+    div(
+      class: "top-0 z-10 h-16 pt-6",
+      style: "position:var(--header-position)",
+    ) do
+      render ContainerComponent.new(
+               class: "top-[var(--header-top,theme(spacing.6))] w-full",
+               style: "position:var(--header-inner-position)",
+             ) do
+        div(class: "relative flex gap-4") do
+          div(class: "flex flex-1") do
+            avatar_container { avatar } unless @is_home_page
+          end
+          div(class: "flex flex-1 justify-end md:justify-center") do
+            desktop_navigation class: "pointer-events-auto hidden md:block"
+          end
+          div(class: "flex justify-end md:flex-1") do
+            div(class: "pointer-events-auto") do
+              render ModeToggle::Component.new
+            end
+          end
         end
       end
     end
