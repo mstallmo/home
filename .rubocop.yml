@@ -1,0 +1,28 @@
+# inherit_from: .rubocop_todo.yml
+
+require:
+  - standard
+  - rubocop-rails
+  - rubocop-rspec
+
+inherit_gem:
+  rubocop-config-prettier: config/rubocop.yml
+  standard: config/base.yml
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - node_modules/**/*
+    - public/**/*
+    - vendor/**/*
+    - db/schema.rb
+    - bin/**/*
+
+Rails:
+  Enabled: true
+RSpec:
+  Enabled: true
+RSpec/DescribeClass:
+  Enabled: false
+RSpec/ExampleLength:
+  Enabled: false
