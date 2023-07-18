@@ -1,16 +1,18 @@
+import { Footer } from "./Footer";
+import { Header } from "./Header";
+
 const Layout = ({ children }) => {
   return (
     <>
-      <div className="min-h-full">
-        <div className="py-10">
-          <main>
-            <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-              <div className="px-4 py-8 sm:px-0">
-                <div className="h-96 rounded-lg bg-white p-3">{children}</div>
-              </div>
-            </div>
-          </main>
+      <div className="fixed inset-0 flex justify-center sm:px-8">
+        <div className="flex w-full max-w-7xl lg:px-8">
+          <div className="w-full bg-white ring-1 ring-zinc-100 dark:bg-zinc-900 dark:ring-zinc-300/20" />
         </div>
+      </div>
+      <div className="relative">
+        <Header />
+        <main>{children}</main>
+        <Footer />
       </div>
     </>
   );

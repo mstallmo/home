@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/react";
 import axios from "axios";
 import Layout from "../components/Layout";
+import "../utils/apperance";
 
 const pages = import.meta.glob("../pages/**/*.jsx");
 
