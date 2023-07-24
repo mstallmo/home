@@ -20,8 +20,6 @@ import image3 from "@/images/photos/image-3.jpg";
 import image4 from "@/images/photos/image-4.jpg";
 import image5 from "@/images/photos/image-5.jpg";
 import { formatDate } from "@/lib/formatDate";
-// import { generateRssFeed } from "@/lib/generateRssFeed";
-// import { getAllArticles } from "@/lib/getAllArticles";
 
 function MailIcon(props) {
   return (
@@ -85,11 +83,9 @@ function ArrowDownIcon(props) {
 function Article({ article }) {
   return (
     <Card as="article">
-      <Card.Title href={`/articles/${article.slug}`}>
-        {article.title}
-      </Card.Title>
-      <Card.Eyebrow as="time" dateTime={article.date} decorate>
-        {formatDate(article.date)}
+      <Card.Title href={`/articles/${article.id}`}>{article.title}</Card.Title>
+      <Card.Eyebrow as="time" dateTime={article.updated_at} decorate>
+        {formatDate(article.updated_at)}
       </Card.Eyebrow>
       <Card.Description>{article.description}</Card.Description>
       <Card.Cta>Read article</Card.Cta>
@@ -260,7 +256,7 @@ export default function Home({ articles }) {
     <>
       <Head>
         <title>
-          Spencer Sharp - Software designer, founder, and amateur astronaut
+          Mason Stallmo - Software designer, founder, and amateur astronaut
         </title>
         <meta
           name="description"
@@ -307,7 +303,7 @@ export default function Home({ articles }) {
         <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
           <div className="flex flex-col gap-16">
             {articles.map((article) => (
-              <Article key={article.slug} article={article} />
+              <Article key={article.id} article={article} />
             ))}
           </div>
           <div className="space-y-10 lg:pl-16 xl:pl-24">
@@ -318,18 +314,4 @@ export default function Home({ articles }) {
       </Container>
     </>
   );
-}
-
-export async function getStaticProps() {
-  if (process.env.NODE_ENV === "production") {
-    await generateRssFeed();
-  }
-
-  return {
-    props: {
-      articles: (await getAllArticles())
-        .slice(0, 4)
-        .map(({ component, ...meta }) => meta),
-    },
-  };
 }

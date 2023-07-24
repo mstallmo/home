@@ -3,7 +3,6 @@ import { Head } from "@inertiajs/react";
 import { Card } from "@/components/Card";
 import { SimpleLayout } from "@/components/SimpleLayout";
 import { formatDate } from "@/lib/formatDate";
-// import { getAllArticles } from "@/lib/getAllArticles";
 
 function Article({ article }) {
   return (
