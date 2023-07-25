@@ -3,4 +3,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#show"
+
+  get "about", to: "about#show"
+  get "uses", to: "uses#show"
+
+  resources :articles, only: %i[index show]
+  resources :projects, only: [:index]
 end
