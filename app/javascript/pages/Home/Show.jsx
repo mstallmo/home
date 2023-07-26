@@ -1,25 +1,20 @@
-import { Head, Link } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import clsx from "clsx";
 
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { Container } from "@/components/Container";
-import {
-  GitHubIcon,
-  InstagramIcon,
-  LinkedInIcon,
-  TwitterIcon,
-} from "@/components/SocialIcons";
-import logoAirbnb from "@/images/logos/airbnb.svg";
-import logoFacebook from "@/images/logos/facebook.svg";
-import logoPlanetaria from "@/images/logos/planetaria.svg";
-import logoStarbucks from "@/images/logos/starbucks.svg";
-import image1 from "@/images/photos/image-1.jpg";
-import image2 from "@/images/photos/image-2.jpg";
-import image3 from "@/images/photos/image-3.jpg";
-import image4 from "@/images/photos/image-4.jpg";
-import image5 from "@/images/photos/image-5.jpg";
+import { Error } from "@/components/Error";
+import image1 from "@/images/photos/IMG_0230.jpg";
+import image2 from "@/images/photos/IMG_0204.jpg";
+import image3 from "@/images/photos/IMG_0050.jpg";
+import image4 from "@/images/photos/IMG_0101.jpg";
+import image5 from "@/images/photos/IMG_0131.jpg";
+import rocketLogo from "@/images/logos/rocket.svg";
+import statsLogo from "@/images/logos/stats.svg";
 import { formatDate } from "@/lib/formatDate";
+import { socialToIcon } from "../../lib/socialToIcon";
+import { DateTime } from "luxon";
 
 function MailIcon(props) {
   return (
@@ -95,16 +90,23 @@ function Article({ article }) {
 
 function SocialLink({ icon: Icon, ...props }) {
   return (
-    <Link className="group -m-1 p-1" {...props}>
+    <a className="group -m-1 p-1" {...props}>
       <Icon className="h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-300" />
-    </Link>
+    </a>
   );
 }
 
 function Newsletter() {
+  const { data, setData, post, processing, errors } = useForm({ email: "" });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    post("/subscribers", { preserveScroll: true });
+  }
+
   return (
     <form
-      action="/thank-you"
+      onSubmit={handleSubmit}
       className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40"
     >
       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
@@ -114,57 +116,42 @@ function Newsletter() {
       <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
         Get notified when I publish something new, and unsubscribe at any time.
       </p>
-      <div className="mt-6 flex">
-        <input
-          type="email"
-          placeholder="Email address"
-          aria-label="Email address"
-          required
-          className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 dark:border-zinc-700 dark:bg-zinc-700/[0.15] dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/10 sm:text-sm"
-        />
-        <Button type="submit" className="ml-4 flex-none">
-          Join
-        </Button>
+      <div className="mt-6">
+        {errors.email && <Error errors={errors} />}
+        <div className="mt-4 flex">
+          <input
+            id="email"
+            type="email"
+            placeholder="Email address"
+            aria-label="Email address"
+            required
+            className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 dark:border-zinc-700 dark:bg-zinc-700/[0.15] dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/10 sm:text-sm"
+            value={data.email}
+            onChange={(e) => setData("email", e.target.value)}
+          />
+          <Button
+            type="submit"
+            disabled={processing}
+            className="ml-4 flex-none"
+          >
+            Join
+          </Button>
+        </div>
       </div>
     </form>
   );
 }
 
-function Resume() {
-  let resume = [
-    {
-      company: "Planetaria",
-      title: "CEO",
-      logo: logoPlanetaria,
-      start: "2019",
-      end: {
-        label: "Present",
-        dateTime: new Date().getFullYear(),
-      },
-    },
-    {
-      company: "Airbnb",
-      title: "Product Designer",
-      logo: logoAirbnb,
-      start: "2014",
-      end: "2019",
-    },
-    {
-      company: "Facebook",
-      title: "iOS Software Engineer",
-      logo: logoFacebook,
-      start: "2011",
-      end: "2014",
-    },
-    {
-      company: "Starbucks",
-      title: "Shift Supervisor",
-      logo: logoStarbucks,
-      start: "2008",
-      end: "2011",
-    },
-  ];
+function jobToLogo(job) {
+  switch (job.company) {
+    case "STATS":
+      return statsLogo;
+    case "Kaliber AI":
+      return rocketLogo;
+  }
+}
 
+function Resume({ jobs }) {
   return (
     <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
@@ -172,43 +159,42 @@ function Resume() {
         <span className="ml-3">Work</span>
       </h2>
       <ol className="mt-6 space-y-4">
-        {resume.map((role, roleIndex) => (
-          <li key={roleIndex} className="flex gap-4">
-            <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
-              <img
-                src={role.logo}
-                alt=""
-                className="h-7 w-7"
-                unoptimized="true"
-              />
-            </div>
-            <dl className="flex flex-auto flex-wrap gap-x-2">
-              <dt className="sr-only">Company</dt>
-              <dd className="w-full flex-none text-sm font-medium text-zinc-900 dark:text-zinc-100">
-                {role.company}
-              </dd>
-              <dt className="sr-only">Role</dt>
-              <dd className="text-xs text-zinc-500 dark:text-zinc-400">
-                {role.title}
-              </dd>
-              <dt className="sr-only">Date</dt>
-              <dd
-                className="ml-auto text-xs text-zinc-400 dark:text-zinc-500"
-                aria-label={`${role.start.label ?? role.start} until ${
-                  role.end.label ?? role.end
-                }`}
-              >
-                <time dateTime={role.start.dateTime ?? role.start}>
-                  {role.start.label ?? role.start}
-                </time>{" "}
-                <span aria-hidden="true">—</span>{" "}
-                <time dateTime={role.end.dateTime ?? role.end}>
-                  {role.end.label ?? role.end}
-                </time>
-              </dd>
-            </dl>
-          </li>
-        ))}
+        {jobs.map((job, roleIndex) => {
+          const startYear = DateTime.fromISO(job.start).year;
+          const endYear = job.end ? DateTime.fromISO(job.end).year : "Present";
+
+          return (
+            <li key={roleIndex} className="flex gap-4">
+              <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+                <img
+                  src={jobToLogo(job)}
+                  alt=""
+                  className="h-7 w-7"
+                  unoptimized="true"
+                />
+              </div>
+              <dl className="flex flex-auto flex-wrap gap-x-2">
+                <dt className="sr-only">Company</dt>
+                <dd className="w-full flex-none text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                  {job.company}
+                </dd>
+                <dt className="sr-only">Role</dt>
+                <dd className="text-xs text-zinc-500 dark:text-zinc-400">
+                  {job.title}
+                </dd>
+                <dt className="sr-only">Date</dt>
+                <dd
+                  className="ml-auto text-xs text-zinc-400 dark:text-zinc-500"
+                  aria-label={`${startYear} until ${endYear}`}
+                >
+                  <time dateTime={startYear}>{startYear}</time>{" "}
+                  <span aria-hidden="true">—</span>{" "}
+                  <time dateTime={endYear}>{endYear}</time>
+                </dd>
+              </dl>
+            </li>
+          );
+        })}
       </ol>
       <Button href="#" variant="secondary" className="group mt-6 w-full">
         Download CV
@@ -251,50 +237,45 @@ function Photos() {
   );
 }
 
-export default function Home({ articles }) {
+export default function Home({ articles, jobs, socials }) {
   return (
     <>
       <Head>
         <title>
-          Mason Stallmo - Software designer, founder, and amateur astronaut
+          Mason Stallmo - Software engineer, photographer, and mountain biker.
         </title>
         <meta
           name="description"
-          content="I’m Spencer, a software designer and entrepreneur based in New York City. I’m the founder and CEO of Planetaria, where we develop technologies that empower regular people to explore space on their own terms."
+          content="
+            I’m Mason, a software engineer based in Phoenix, AZ, USA
+            specializing in Rails and AI. When I'm away from my computer you can
+            find me behind the lens of my Cannon 6DMarkII or behind the bars of
+            my mountain bike. Most times I'd rather be in the mountains or the
+            ocean rather than my desk.
+          "
         />
       </Head>
       <Container className="mt-9">
         <div className="max-w-2xl">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-            Software designer, founder, and amateur astronaut.
+            Software engineer, photographer, and mountain biker.
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            I’m Spencer, a software designer and entrepreneur based in New York
-            City. I’m the founder and CEO of Planetaria, where we develop
-            technologies that empower regular people to explore space on their
-            own terms.
+            I’m Mason, a software engineer based in Phoenix, AZ, USA
+            specializing in Rails and AI. When I'm away from my computer you can
+            find me behind the lens of my Cannon 6DMarkII or behind the bars of
+            my mountain bike. Most times I'd rather be in the mountains or the
+            ocean rather than my desk.
           </p>
           <div className="mt-6 flex gap-6">
-            <SocialLink
-              href="https://twitter.com"
-              aria-label="Follow on Twitter"
-              icon={TwitterIcon}
-            />
-            <SocialLink
-              href="https://instagram.com"
-              aria-label="Follow on Instagram"
-              icon={InstagramIcon}
-            />
-            <SocialLink
-              href="https://github.com"
-              aria-label="Follow on GitHub"
-              icon={GitHubIcon}
-            />
-            <SocialLink
-              href="https://linkedin.com"
-              aria-label="Follow on LinkedIn"
-              icon={LinkedInIcon}
-            />
+            {socials.map((social) => (
+              <SocialLink
+                key={social.site}
+                href={social.link}
+                aria-label={`Follow on ${social.site}`}
+                icon={socialToIcon(social)}
+              />
+            ))}
           </div>
         </div>
       </Container>
@@ -308,7 +289,7 @@ export default function Home({ articles }) {
           </div>
           <div className="space-y-10 lg:pl-16 xl:pl-24">
             <Newsletter />
-            <Resume />
+            <Resume jobs={jobs} />
           </div>
         </div>
       </Container>

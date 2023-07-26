@@ -9,4 +9,6 @@ Rails.application.routes.draw do
 
   resources :articles, only: %i[index show]
   resources :projects, only: [:index]
+  resources :subscribers, only: [:create]
+  get "subscribers/thank_you", to: "subscribers#thank_you"
 end

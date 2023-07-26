@@ -4,7 +4,7 @@ import { Popover, Transition } from "@headlessui/react";
 import clsx from "clsx";
 
 import { Container } from "@/components/Container";
-import avatarImage from "@/images/avatar.jpg";
+import profilePhoto from "@/images/profile-photo.jpg";
 
 function CloseIcon(props) {
   return (
@@ -230,7 +230,7 @@ function Avatar({ large = false, className, ...props }) {
       {...props}
     >
       <img
-        src={avatarImage}
+        src={profilePhoto}
         alt=""
         sizes={large ? "4rem" : "2.25rem"}
         className={clsx(

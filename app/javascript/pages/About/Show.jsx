@@ -2,27 +2,9 @@ import { Head } from "@inertiajs/react";
 import clsx from "clsx";
 
 import { Container } from "@/components/Container";
-import {
-  GitHubIcon,
-  InstagramIcon,
-  TwitterIcon,
-  GlobeIcon,
-} from "@/components/SocialIcons";
 import portraitImage from "@/images/portrait.jpg";
 import { capitalizeFirst } from "../../lib/formatText";
-
-function socialToIcon(social) {
-  switch (social.site) {
-    case "twitter":
-      return TwitterIcon;
-    case "instagram":
-      return InstagramIcon;
-    case "github":
-      return GitHubIcon;
-    default:
-      return GlobeIcon;
-  }
-}
+import { socialToIcon } from "../../lib/socialToIcon";
 
 function SocialLink({ className, href, children, icon: Icon }) {
   return (
