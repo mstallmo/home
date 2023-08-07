@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import {
-  ChartBarSquareIcon,
   Cog6ToothIcon,
-  FolderIcon,
-  GlobeAltIcon,
-  ServerIcon,
-  SignalIcon,
+  PencilIcon,
+  HomeModernIcon,
 } from "@heroicons/react/24/outline";
 import { Bars3Icon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 
@@ -13,17 +10,13 @@ import DesktopSidebar from "@/components/admin/DesktopSidebar";
 import MobileSidebar from "@/components/admin/MobileSidebar";
 
 const navigation = [
-  { name: "Projects", href: "#", icon: FolderIcon, current: false },
-  { name: "Deployments", href: "#", icon: ServerIcon, current: true },
-  { name: "Activity", href: "#", icon: SignalIcon, current: false },
-  { name: "Domains", href: "#", icon: GlobeAltIcon, current: false },
-  { name: "Usage", href: "#", icon: ChartBarSquareIcon, current: false },
-  { name: "Settings", href: "#", icon: Cog6ToothIcon, current: false },
-];
-const teams = [
-  { id: 1, name: "Planetaria", href: "#", initial: "P", current: false },
-  { id: 2, name: "Protocol", href: "#", initial: "P", current: false },
-  { id: 3, name: "Tailwind Labs", href: "#", initial: "T", current: false },
+  { name: "Dashboard", href: "/admin/dashboard", icon: HomeModernIcon },
+  {
+    name: "Articles",
+    href: "/admin/articles",
+    icon: PencilIcon,
+  },
+  { name: "Settings", href: "#", icon: Cog6ToothIcon },
 ];
 
 const AdminLayout = ({ children }) => {
@@ -39,10 +32,9 @@ const AdminLayout = ({ children }) => {
   return (
     <>
       <div>
-        <DesktopSidebar navigation={navigation} teams={teams} />
+        <DesktopSidebar navigation={navigation} />
         <MobileSidebar
           navigation={navigation}
-          teams={teams}
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
         />

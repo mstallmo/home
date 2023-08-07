@@ -25,5 +25,6 @@ Rails.application.routes.draw do
   # Site administration routes
   namespace :admin do
     get "dashboard", to: "dashboard#show"
+    resources :articles, only: [:index]
   end
 end
