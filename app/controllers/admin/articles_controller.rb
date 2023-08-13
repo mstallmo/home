@@ -52,6 +52,16 @@ class Admin::ArticlesController < ApplicationController
     end
   end
 
+  def destroy
+    article = Article.find(params[:id])
+
+    if article.destroy
+      redirect_to admin_articles_path
+    else
+      redirect_to edit_admin_article_path, inertia: { errors: article.errors }
+    end
+  end
+
   private
 
   def article_params
