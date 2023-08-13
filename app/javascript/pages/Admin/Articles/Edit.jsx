@@ -2,32 +2,21 @@ import { Link, useForm } from "@inertiajs/react";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { DocumentArrowUpIcon } from "@heroicons/react/24/solid";
 
-import AdminLayout from "@/components/admin/Layout";
+import Layout from "@/components/admin/Layout";
 import { Error } from "@/components/Error";
 
-const New = () => {
-  const { data, setData, post, processing, errors, transform } = useForm({
-    title: "",
-    description: "",
-    source_file: null,
-    publish_status: "draft",
+const Edit = ({ article }) => {
+  const { data, setData, put, processing, errors } = useForm({
+    title: article.title,
+    description: article.description,
+    content: article.content,
+    publish_status: article.publish_status,
   });
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    const fileReader = new FileReader();
-    fileReader.readAsText(data.source_file[0], "UTF-8");
-    fileReader.onload = () => {
-      transform((data) => ({
-        title: data.title,
-        description: data.description,
-        content: fileReader.result,
-        publish_status: data.publish_status,
-      }));
-
-      post("/admin/articles");
-    };
+    put(`/admin/articles/${article.id}`);
   }
 
   return (
@@ -42,9 +31,10 @@ const New = () => {
             Back
           </Link>
           <h1 className="text-base font-semibold leading-7 text-white">
-            New Article
+            Edit article
           </h1>
         </header>
+
         <form className="m-10 sm:rounded-lg" onSubmit={handleSubmit}>
           {Object.keys(errors).length > 0 && <Error errors={errors} />}
           <div className="space-y-12">
@@ -85,6 +75,7 @@ const New = () => {
                       name="description"
                       rows={3}
                       className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                      defaultValue={article.description}
                       value={data.description}
                       onChange={(e) => setData("description", e.target.value)}
                     />
@@ -176,7 +167,7 @@ const New = () => {
               className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
               disabled={processing}
             >
-              Post
+              Save
             </button>
           </div>
         </form>
@@ -185,6 +176,5 @@ const New = () => {
   );
 };
 
-New.layout = AdminLayout;
-
-export default New;
+Edit.layout = Layout;
+export default Edit;

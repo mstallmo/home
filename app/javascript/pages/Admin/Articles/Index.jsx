@@ -119,7 +119,7 @@ const Index = ({ articles }) => {
                   </div>
                   <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
                     <a
-                      href={`/admin/articles/${article.id}`}
+                      href={`/admin/articles/${article.id}/edit`}
                       className="flex gap-x-2"
                     >
                       <span className="whitespace-nowrap">{article.title}</span>

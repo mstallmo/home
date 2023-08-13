@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   def show
     render inertia: "Home/Show",
            props: {
-             articles: Article.all,
+             articles: Article.published,
              jobs: Job.all.order(start: :desc),
              socials: Social.all,
            }

@@ -26,6 +26,13 @@ class Admin::ArticlesController < ApplicationController
     render inertia: "Admin/Articles/New"
   end
 
+  def edit
+    render inertia: "Admin/Articles/Edit",
+           props: {
+             article: Article.find(params[:id]),
+           }
+  end
+
   def create
     article = Article.new(article_params)
     if article.save
@@ -35,9 +42,31 @@ class Admin::ArticlesController < ApplicationController
     end
   end
 
+  def update
+    article = Article.find(params[:id])
+
+    if article.update(article_params)
+      redirect_to admin_articles_path
+    else
+      redirect_to edit_admin_article_path, inertia: { errors: article.errors }
+    end
+  end
+
   private
 
   def article_params
-    params.require(:article).permit(:title, :description, :content)
+    new_article_params =
+      params.require(:article).permit(
+        :title,
+        :description,
+        :content,
+        :publish_status,
+      )
+
+    if new_article_params[:publish_status] == "published"
+      new_article_params.merge({ published_at: Time.zone.now })
+    else
+      new_article_params
+    end
   end
 end
