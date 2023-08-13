@@ -104,7 +104,7 @@ module.exports = {
           },
 
           // Headings
-          "h2, h3": {
+          "h2, h3, h4": {
             color: "var(--tw-prose-headings)",
             fontWeight: theme("fontWeight.semibold"),
           },
@@ -120,7 +120,13 @@ module.exports = {
             marginTop: theme("spacing.16"),
             marginBottom: theme("spacing.4"),
           },
-          ":is(h2, h3) + *": {
+          h4: {
+            fontSize: theme("fontSize.sm")[0],
+            lineHeight: theme("lineHeight.7"),
+            marginTop: theme("spacing.12"),
+            marginBottom: theme("spacing.2"),
+          },
+          ":is(h2, h3, h4) + *": {
             marginTop: 0,
           },
 

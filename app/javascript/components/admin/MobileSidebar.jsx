@@ -8,7 +8,7 @@ function classNames(...classes) {
 }
 
 function currentPage(path) {
-  return window.location.pathname === path;
+  return window.location.pathname.includes(path);
 }
 
 export default function MobileSidebar({
