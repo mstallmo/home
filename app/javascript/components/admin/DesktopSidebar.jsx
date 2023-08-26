@@ -1,23 +1,22 @@
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
-function currentPage(path) {
-  return window.location.pathname.includes(path);
-}
+import UserProfileMenu from "./UserProfileMenu";
+import { classNames, currentPage } from "../../utils/display";
 
 export default function DesktopSidebar({ navigation }) {
+  const { user } = usePage().props;
+
   return (
     <div className="hidden xl:fixed xl:inset-y-0 xl:z-50 xl:flex xl:w-72 xl:flex-col">
       <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-black/10 px-6 ring-1 ring-white/5">
         <div className="flex h-16 shrink-0 items-center">
-          <img
-            className="h-8 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-            alt="Your Company"
-          />
+          <Link href="/">
+            <img
+              className="h-8 w-auto"
+              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+              alt="Your Company"
+            />
+          </Link>
         </div>
         <nav className="flex flex-1 flex-col">
           <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -45,7 +44,7 @@ export default function DesktopSidebar({ navigation }) {
               </ul>
             </li>
             <li className="-mx-6 mt-auto">
-              <Link
+              {/* <Link
                 href="#"
                 className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800"
               >
@@ -55,8 +54,9 @@ export default function DesktopSidebar({ navigation }) {
                   alt=""
                 />
                 <span className="sr-only">Your profile</span>
-                <span aria-hidden="true">Tom Cook</span>
-              </Link>
+                <span aria-hidden="true">{user.email}</span>
+              </Link> */}
+              <UserProfileMenu user={user} />
             </li>
           </ul>
         </nav>

@@ -1,21 +1,18 @@
 import { Fragment } from "react";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
-function currentPage(path) {
-  return window.location.pathname.includes(path);
-}
+import UserProfileMenu from "./UserProfileMenu";
+import { classNames, currentPage } from "../../utils/display";
 
 export default function MobileSidebar({
   navigation,
   sidebarOpen,
   setSidebarOpen,
 }) {
+  const { user } = usePage().props;
+
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
       <Dialog
@@ -104,7 +101,8 @@ export default function MobileSidebar({
                       </ul>
                     </li>
                     <li className="-mx-6 mt-auto">
-                      <Link
+                      <UserProfileMenu user={user} />
+                      {/* <Link
                         href="#"
                         className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800"
                       >
@@ -114,8 +112,8 @@ export default function MobileSidebar({
                           alt=""
                         />
                         <span className="sr-only">Your profile</span>
-                        <span aria-hidden="true">Tom Cook</span>
-                      </Link>
+                        <span aria-hidden="true">{user.email}</span>
+                      </Link> */}
                     </li>
                   </ul>
                 </nav>
