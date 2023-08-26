@@ -1,16 +1,12 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/react";
-import axios from "axios";
 import Layout from "../components/Layout";
 import "../utils/apperance";
 
 const pages = import.meta.glob("../pages/**/*.jsx");
 
 document.addEventListener("DOMContentLoaded", () => {
-  const csrfToken = document.querySelector("meta[name=csrf-token]").content;
-  axios.defaults.headers.common["X-CSRF-Token"] = csrfToken;
-
   createInertiaApp({
     resolve: async (name) => {
       const page = (await pages[`../pages/${name}.jsx`]()).default;
