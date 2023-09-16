@@ -4,7 +4,10 @@ class Admin::ImagesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    render inertia: "Admin/Images/Index"
+    render inertia: "Admin/Images/Index",
+           props: {
+             images: Image.all.order(:created_at),
+           }
   end
 
   def new

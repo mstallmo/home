@@ -1,8 +1,40 @@
 import { Link } from "@inertiajs/react";
 import { ArrowUpCircleIcon, PlusIcon } from "@heroicons/react/20/solid";
+import { DateTime } from "luxon";
 
 import AdminLayout from "@/components/admin/Layout";
 import PageHeader from "@/components/admin/PageHeader";
+
+function ImageGallery({ images }) {
+  return (
+    <div className="py-12 sm:py-24">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <ul
+          role="list"
+          className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
+        >
+          {images.map((image) => (
+            <li key={image.thumbnail_url}>
+              <img
+                className="aspect-[3/2] w-full rounded-2xl object-cover"
+                src={image.thumbnail_url}
+                alt=""
+              />
+              <h3 className="text-md mt-6 font-semibold leading-8 tracking-tight text-white">
+                {image.name}
+              </h3>
+              <p className="text-base leading-7 text-gray-600">
+                {DateTime.fromISO(image.created_at).toLocaleString(
+                  DateTime.DATETIME_FULL
+                )}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
 
 function EmptyState() {
   return (
@@ -47,7 +79,7 @@ const Index = ({ images }) => {
         actionLink="/admin/images/new"
       />
       <div className="mt-16">
-        <EmptyState />
+        {images.length > 0 ? <ImageGallery images={images} /> : <EmptyState />}
       </div>
     </main>
   );
