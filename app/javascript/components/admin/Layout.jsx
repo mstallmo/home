@@ -3,6 +3,7 @@ import {
   Cog6ToothIcon,
   PencilIcon,
   HomeModernIcon,
+  CameraIcon,
 } from "@heroicons/react/24/outline";
 import { Bars3Icon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 
@@ -16,6 +17,7 @@ const navigation = [
     href: "/admin/articles",
     icon: PencilIcon,
   },
+  { name: "Images", href: "/admin/images", icon: CameraIcon },
   { name: "Settings", href: "#", icon: Cog6ToothIcon },
 ];
 
