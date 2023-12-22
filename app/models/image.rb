@@ -3,7 +3,6 @@
 class Image < ApplicationRecord
   has_many :exhibitions, dependent: nil
   has_many :galleries, through: :exhibitions
-
   has_one_attached :media do |attachable|
     attachable.variant :thumb,
                        resize_to_fit: [1260, 720],
@@ -11,6 +10,7 @@ class Image < ApplicationRecord
                          quality: 100,
                        }
   end
+  delegate :url, to: :media
 
   scope :homepage, -> { where(homepage: true) }
 
@@ -31,7 +31,7 @@ class Image < ApplicationRecord
   end
 
   def serializable_hash(options = {})
-    default_options = { methods: :thumbnail_url }
+    default_options = { methods: %i[thumbnail_url url] }
 
     super(default_options.merge(options))
   end

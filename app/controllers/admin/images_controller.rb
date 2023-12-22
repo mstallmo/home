@@ -14,6 +14,13 @@ class Admin::ImagesController < ApplicationController
     render inertia: "Admin/Images/New"
   end
 
+  def edit
+    render inertia: "Admin/Images/Edit",
+           props: {
+             image: Image.find(params[:id]),
+           }
+  end
+
   def create
     image = Image.new(image_params)
     if image.save
@@ -23,9 +30,27 @@ class Admin::ImagesController < ApplicationController
     end
   end
 
+  def update
+    image = Image.find(params[:id])
+
+    if image.update(update_image_params)
+      flash[:notice] = "Image #{image.name} updated!"
+      redirect_to edit_admin_image_path(image)
+    else
+      redirect_to edit_admin_image_path(image),
+                  inertia: {
+                    errors: image.errors,
+                  }
+    end
+  end
+
   private
 
   def image_params
     params.permit(:name, :media)
+  end
+
+  def update_image_params
+    params.require(:image).permit(:name, :homepage)
   end
 end

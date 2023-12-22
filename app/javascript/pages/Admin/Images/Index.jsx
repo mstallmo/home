@@ -15,11 +15,13 @@ function ImageGallery({ images }) {
         >
           {images.map((image) => (
             <li key={image.thumbnail_url}>
-              <img
-                className="aspect-[3/2] w-full rounded-2xl object-cover"
-                src={image.thumbnail_url}
-                alt=""
-              />
+              <Link href={`/admin/images/${image.id}/edit`}>
+                <img
+                  className="aspect-[3/2] w-full rounded-2xl object-cover"
+                  src={image.thumbnail_url}
+                  alt=""
+                />
+              </Link>
               <h3 className="text-md mt-6 font-semibold leading-8 tracking-tight text-white">
                 {image.name}
               </h3>

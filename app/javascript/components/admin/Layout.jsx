@@ -9,6 +9,7 @@ import { Bars3Icon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 
 import DesktopSidebar from "@/components/admin/DesktopSidebar";
 import MobileSidebar from "@/components/admin/MobileSidebar";
+import SuccessNotification from "@/components/admin/SuccessNotification";
 
 const navigation = [
   { name: "Dashboard", href: "/admin/dashboard", icon: HomeModernIcon },
@@ -76,6 +77,7 @@ const AdminLayout = ({ children }) => {
 
           {children}
         </div>
+        <SuccessNotification />
       </div>
     </>
   );

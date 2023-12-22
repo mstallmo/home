@@ -26,6 +26,6 @@ Rails.application.routes.draw do
   namespace :admin do
     get "dashboard", to: "dashboard#show"
     resources :articles, except: :show
-    resources :images, only: %i[new index create]
+    resources :images, only: %i[index new edit create update]
   end
 end
