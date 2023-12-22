@@ -5,11 +5,6 @@ import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { Container } from "@/components/Container";
 import { Error } from "@/components/Error";
-import image1 from "@/images/photos/IMG_0230.jpg";
-import image2 from "@/images/photos/IMG_0204.jpg";
-import image3 from "@/images/photos/IMG_0050.jpg";
-import image4 from "@/images/photos/IMG_0101.jpg";
-import image5 from "@/images/photos/IMG_0131.jpg";
 import rocketLogo from "@/images/logos/rocket.svg";
 import statsLogo from "@/images/logos/stats.svg";
 import { formatDate } from "@/lib/formatDate";
@@ -204,7 +199,7 @@ function Resume({ jobs }) {
   );
 }
 
-function Photos() {
+function Photos({ images }) {
   let rotations = [
     "rotate-2",
     "-rotate-2",
@@ -216,7 +211,7 @@ function Photos() {
   return (
     <div className="mt-16 sm:mt-20">
       <div className="-my-4 flex justify-center gap-5 overflow-hidden py-4 sm:gap-8">
-        {[image1, image2, image3, image4, image5].map((image, imageIndex) => (
+        {images.map((image, imageIndex) => (
           <div
             key={imageIndex}
             className={clsx(
@@ -237,7 +232,7 @@ function Photos() {
   );
 }
 
-export default function Home({ articles, jobs, socials }) {
+export default function Home({ images, articles, jobs, socials }) {
   return (
     <>
       <Head>
@@ -279,7 +274,7 @@ export default function Home({ articles, jobs, socials }) {
           </div>
         </div>
       </Container>
-      <Photos />
+      <Photos images={images} />
       <Container className="mt-24 md:mt-28">
         <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
           <div className="flex flex-col gap-16">

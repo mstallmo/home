@@ -3,11 +3,13 @@ import {
   Cog6ToothIcon,
   PencilIcon,
   HomeModernIcon,
+  CameraIcon,
 } from "@heroicons/react/24/outline";
 import { Bars3Icon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 
 import DesktopSidebar from "@/components/admin/DesktopSidebar";
 import MobileSidebar from "@/components/admin/MobileSidebar";
+import SuccessNotification from "@/components/admin/SuccessNotification";
 
 const navigation = [
   { name: "Dashboard", href: "/admin/dashboard", icon: HomeModernIcon },
@@ -16,6 +18,7 @@ const navigation = [
     href: "/admin/articles",
     icon: PencilIcon,
   },
+  { name: "Images", href: "/admin/images", icon: CameraIcon },
   { name: "Settings", href: "#", icon: Cog6ToothIcon },
 ];
 
@@ -74,6 +77,7 @@ const AdminLayout = ({ children }) => {
 
           {children}
         </div>
+        <SuccessNotification />
       </div>
     </>
   );
