@@ -6,7 +6,7 @@ require:
   - rubocop-rspec
 
 inherit_gem:
-  rubocop-config-prettier: config/rubocop.yml
+  # rubocop-config-prettier: config/rubocop.yml
   standard: config/base.yml
 
 AllCops:
