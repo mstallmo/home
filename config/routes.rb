@@ -1,31 +1,10 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # User Onboarding TODO:
-  # - First time user registration flow
-  # - Password reset
-  devise_for :users,
-             controllers: {
-               sessions: "users/sessions",
-               # registrations: "users/registrations",
-             },
-             skip: %i[registrations passwords]
+  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
+  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root "home#show"
-
-  get "about", to: "about#show"
-  get "uses", to: "uses#show"
-
-  resources :articles, only: %i[index show]
-  resources :projects, only: [:index]
-  resources :subscribers, only: [:create]
-  get "subscribers/thank_you", to: "subscribers#thank_you"
-
-  # Site administration routes
-  namespace :admin do
-    get "dashboard", to: "dashboard#show"
-    resources :articles, except: :show
-    resources :images, only: %i[index new edit create update]
-  end
+  # root "posts#index"
 end

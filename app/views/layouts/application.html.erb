@@ -1,24 +1,16 @@
 <!DOCTYPE html>
-<html class="h-full antialiased">
+<html>
   <head>
+    <title>Home</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= vite_client_tag %>
-    <%= vite_react_refresh_tag %>
-    <%= vite_javascript_tag 'application.jsx' %>
-    <!--
-      If using a TypeScript entrypoint file:
-        vite_typescript_tag 'application'
-
-      If using a .jsx or .tsx entrypoint, add the extension:
-        vite_javascript_tag 'application.jsx'
-
-      Visit the guide for more information: https://vite-ruby.netlify.app/guide/rails
-    -->
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
-  <body class="flex h-full flex-col bg-zinc-50 dark:bg-black">
+
+  <body>
     <%= yield %>
   </body>
 </html>
