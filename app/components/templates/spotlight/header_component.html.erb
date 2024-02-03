@@ -1,0 +1,29 @@
+<header class="pointer-events-none relative z-50 flex flex-none flex-col" style="height: var(--header-height); margin-bottom: var(--header-mb);">
+    <div class="order-last mt-[calc(theme(spacing.16)-theme(spacing.3))]"></div>
+    <%= render Templates::Spotlight::ContainerComponent.new(class_name: "top-0 order-last -mb-3 pt-3", style: "position: var(--header-position);") do %>
+        <div class="top-[var(--avatar-top,theme(spacing.3))] w-full" style="position: var(--header-inner-position);">
+            <div class="relative">
+                <%= render Templates::Spotlight::Headers::AvatarComponent.new(home_page: true, large: true) %>
+            </div>
+        </div>
+    <% end %>
+    <div class="top-0 z-10 h-16 pt-6" style="position: var(--header-position);">
+        <%= render Templates::Spotlight::ContainerComponent.new(class_name: "top-[var(--header-top,theme(spacing.6))] w-full", style: "position: var(--header-inner-position);") do %>
+            <div class="relative flex gap-4">
+                <div class="flex flex-1">
+                    <!-- TODO: Avatar if not home page -->
+                </div>
+                <div class="flex flex-1 justify-end md:justify-center">
+                    <!-- TODO: Mobile Navigation -->
+                    <%= render Templates::Spotlight::Headers::DesktopNavigationComponent.new %>
+                </div>
+                <div class="flex justify-end md:flex-1">
+                    <div class="pointer-events-auto">
+                        <%= render Templates::Spotlight::Headers::ModeToggleComponent.new %>
+                        <!-- TODO: Mode toggle -->
+                    </div>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</header>
